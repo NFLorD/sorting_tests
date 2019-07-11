@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sorting</title>
+</head>
+
+<body>
+    <script>
+        let input = [10, 15, -34, 2, 87, 3, 5, 2, 10, 15, -34, 2, 87, 3, 5, 2, 10, 15, -34, 2, 87, 3, 5, 2, 14, 13, 65, 33];
+        let counter = 0;
+        let sort1;
+        let sort2;
+        let sort3;
+
+        function _sort(array, depth = 1) {
+            let len = array.length - 1;
+            for (let i = 0; i < len; i++) {
+                counter++;
+                // console.log(array, "This is depth " + depth + ", at i = " + i);
+                if (array[i] > array[i + 1]) {
+                    array.push(array.splice(i, 1)[0]);
+                    array = _sort(array, depth + 1);
+                }
+
+                if (i == len - 1) return array;
+            }
+
+            return array;
+        }
+
+        console.log(sort1 = _sort(input), counter);
+
+        input = [10, 15, -34, 2, 87, 3, 5, 2, 10, 15, -34, 2, 87, 3, 5, 2, 10, 15, -34, 2, 87, 3, 5, 2, 14, 13, 65, 33];
+        counter = 0;
+
+        function _sort2(array, depth = 1) {
+            let internal_counter = 0;
+            while (true) {
+                let len = array.length - 1;
+                for (let i = 0; i < len; i++) {
+                    counter++;
+                    // console.log(array, "This is depth " + depth + ", at i = " + i);
+                    if (array[i] > array[i + 1]) {
+                        internal_counter++;
+                        array.push(array.splice(i, 1)[0]);
+                    }
+
+                    if (i == len - 1 && internal_counter == 0) return array;
+                }
+                internal_counter = 0;
+            }
+        }
+
+        console.log(sort2 = _sort2(input), counter);
+
+        input = [10, 15, -34, 2, 87, 3, 5, 2, 10, 15, -34, 2, 87, 3, 5, 2, 10, 15, -34, 2, 87, 3, 5, 2, 14, 13, 65, 33];
+        counter = 0;
+
+        function _sort3(array, depth = 1) {
+            let internal_counter = 0;
+            let number = 0;
+            while (true) {
+                let len = array.length - 1;
+                for (let i = 0; i < len; i++) {
+                    counter++;
+                    // console.log(array, "This is depth " + depth + ", at i = " + i);
+                    if (array[i] > array[i + 1]) {
+                        internal_counter++;
+                        number = array.splice(i, 1)[0];
+                        array = compareReverse(array, number);
+                    }
+
+                    if (i == len - 1 && internal_counter == 0) return array;
+                }
+                internal_counter = 0;
+            }
+        }
+
+        function compareReverse(array, number) {
+            for (let i = array.length - 1; i >= 0; i--) {
+                if (number > array[i]) {
+                    array.splice(i + 1, 0, number);
+                    return array;
+                }
+            }
+
+            return array.push(number);
+        }
+
+        console.log(sort3 = _sort3(input), counter);
+
+
+        function arraysEqual(a1, a2) {
+            /* WARNING: arrays must not contain {objects} or behavior may be undefined */
+            return JSON.stringify(a1) == JSON.stringify(a2);
+        }
+
+        console.log(arraysEqual(sort1, sort2), arraysEqual(sort2, sort3));
+    </script>
+</body>
+
+</html>
